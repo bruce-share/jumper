@@ -1,0 +1,164 @@
+/* Set the font family and size for the entire popup */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.container {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Set the style for the title */
+h1 {
+  font-weight: bold;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Set the style for the fixed text */
+p {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+/* Set the style for the text input */
+input[type="text"] {
+  font-size: 14px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+textarea {
+  font-size: 14px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* Set the style for the save button */
+button {
+  background-color: #66CDAA;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 120px;
+  font-size: 14px;
+}
+
+#import-button {
+  background-color: #D4AC0D;
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 80px;
+  font-size: 14px;
+}
+
+#export-button {
+  background-color: #2874A6;
+  margin-left: 900px;
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 80px;
+  font-size: 14px;
+}
+
+
+/* Set the hover effect for the save button */
+button:hover {
+  background-color: #3e8e41;
+}
+
+
+/* Customize the table appearance */
+table {
+  width: 1200px;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th,
+td, tr {
+  padding: 10px;
+  text-align: left;
+  border-right: 1px solid #ddd; /* Add vertical line */
+}
+
+th:first-child,
+td:first-child {
+  width: 30px;
+  border-left: 1px solid #ddd; /* Add vertical line */
+}
+
+#keyword {
+  width: 150px;
+}
+
+#title {
+  width: 500px;
+}
+
+
+th[id="url"],
+td[data-field="url"] {
+  width: 500px;
+  word-wrap: break-word;
+  display: inline-block;
+}
+
+th:last-child,
+td:last-child {
+  width: 20px;
+}
+
+tr:last-child {
+  border-bottom: 1px solid #ddd; /* Add horizontal line */
+}
+
+
+th {
+  background-color: #66CDAA;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Style the delete icon button */
+.delete-icon {
+  color: #f44336;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  color: #d32f2f;
+}
+
+.modified {
+  background-color: #ffe0b2;
+}
+
+#current-url {
+  width: 350px;
+  word-wrap: break-word;
+  display: inline-block;
+}

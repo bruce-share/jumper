@@ -1,0 +1,45 @@
+{
+  "name": "Jumper",
+  "version": "0.1",
+  "description": "Quickly jump to any website by mapping a keyword to it",
+  "permissions": [
+    "tabs",
+    "storage",
+    "search"
+  ],
+  "omnibox": { "keyword": "j" },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "48": "data/img/icon48.png",
+      "128": "data/img/icon128.png"
+    },
+    "default_popup": "data/popup.html"
+  },
+  "options_ui": {
+    "page": "data/options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "48": "data/img/icon48.png",
+    "128": "data/img/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "data/img/icon48.png",
+        "data/sitemap.txt",
+        "README.md",
+        "hello.html",
+        "script.js"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
+    }
+  ],
+  "manifest_version": 3
+}

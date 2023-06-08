@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Options</title>
+    <script src="js/options.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/extension.css">
+</head>
+<body class="container">
+<div>
+    <h1><img src="img/icon48.png" style="margin: 10px"/>Jumper</h1>
+
+    <H2>Manage your keywords</H2>
+    <table id="data-table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th id="keyword">Keyword</th>
+            <th id="title">Title</th>
+            <th id="url">URL</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Table rows will be dynamically added here -->
+        </tbody>
+    </table>
+    <br/>
+    <button id="save-button">Save</button>
+    <button id="export-button">Export</button>
+    <input type="file" id="import-file" accept=".txt" style="display: none;">
+    <button id="import-button">Import</button>
+</div>
+</body>
+</html>
