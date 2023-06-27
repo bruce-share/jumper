@@ -9,7 +9,7 @@
 * __Spotlight search by a keyword and jump to the website instantly__
 * __Fully manage keywords you had created__
 
-### Manual installation (Skip if installed)
+### Manual installation (Skip if installed from Chrome Store)
 1. Clone this [repository](https://github.com/bruce-share/jumper/) onto your device or download [zip file](https://github.com/bruce-share/jumper/archive/refs/heads/main.zip).
 2. Navigate to __`chrome://extensions/`__.
 3. Turn on Developer mode option on the top right corner of the page to see the following buttons.

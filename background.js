@@ -2,6 +2,7 @@ import {saveSiteMapToStorage, loadSiteMapFromStorage, loadSiteMapFromFile} from 
 
 let sites = [];
 let optionUrl = "chrome-extension://"+chrome.runtime.id+"/data/options.html";
+let tutorialUrl = "chrome-extension://"+chrome.runtime.id+"/hello.html";
 let keywords = [];
 let currentFilterPromise;
 
@@ -94,6 +95,9 @@ async function buildSiteMapFromStorage() {
        //Add option shortcut for this extension
        let option = "option "+optionUrl;
        sitemapText += "\n" + option;
+       //Add tutorial shortcut for this extension
+       let help = "help "+tutorialUrl;
+       sitemapText += "\n" + help;
        saveSiteMapToStorage(sitemapText);
    }
    console.log("Build site map");
@@ -104,7 +108,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   buildSiteMapFromStorage();
   if (details.reason === "install") {
       // open the link after installation
-      chrome.tabs.create({ url: optionUrl });
+      chrome.tabs.create({ url: tutorialUrl });
     }
 });
 

@@ -1,7 +1,7 @@
 {
   "name": "Jumper",
-  "version": "0.1",
-  "description": "Quickly jump to any website by mapping a keyword to it",
+  "version": "0.2",
+  "description": "No more bookmark. Quickly jump to any website by a keyword of your choice",
   "permissions": [
     "tabs",
     "storage",
