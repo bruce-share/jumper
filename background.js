@@ -22,11 +22,11 @@ function filterKeywords(text) {
     }
     const filteredKeywords = keywords.filter(keyword => keyword.key.includes(text))
                                      .sort((a, b) => a.key.indexOf(text) - b.key.indexOf(text));
-
+    text = text.toLowerCase();
     let suggestFilters = filteredKeywords.slice(0, 10);
     if (suggestFilters.length<10) {
-        const filteredTitles = keywords.filter(keyword => keyword.title.includes(text))
-                               .sort((a, b) => a.title.indexOf(text) - b.title.indexOf(text));
+        const filteredTitles = keywords.filter(keyword => keyword.title.toLowerCase().includes(text))
+                               .sort((a, b) => a.title.toLowerCase().indexOf(text) - b.title.toLowerCase().indexOf(text));
         suggestFilters.push(...filteredTitles);
         suggestFilters = suggestFilters.slice(0, 10);
     }
@@ -150,7 +150,7 @@ async function openTargetSite(sites, keyword, tabId) {
             continue;
         }
         for (let j = 0; j < sites[i].length-1; j++) {
-            if (sites[i][j] == keyword) {
+            if (sites[i][j].toLowerCase() == keyword.toLowerCase()) {
                 var url=sites[i][sites[i].length-1];
                 console.log(url);
                 chrome.tabs.update(tabId, {url: url});
