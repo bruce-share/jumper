@@ -6,6 +6,7 @@ let tutorialUrl = "chrome-extension://"+chrome.runtime.id+"/hello.html";
 let keywords = [];
 let currentFilterPromise;
 let options = {};
+let bestMatchedKeyword = "";
 
 function xmlEncode(str) {
   return str.replace(/'/g, '&apos;')
@@ -35,6 +36,9 @@ function filterKeywords(text) {
       content: keyword.key+"\u00A0",
       description: keyword.title
     }));
+    if (suggestions.length>0) {
+        bestMatchedKeyword = suggestions[0].content.trim();
+    }
     resolve(suggestions);
   });
 }
@@ -53,11 +57,15 @@ chrome.omnibox.onInputChanged.addListener((text, suggest) => {
 });
 
 chrome.omnibox.onInputEntered.addListener(async (keyword) => {
-  console.log("keyword = "+keyword);
+  keyword = keyword.trim();
+  console.log("keyword = "+keyword +" best matched: "+bestMatchedKeyword);
+  if (bestMatchedKeyword.indexOf(keyword) >= 0) {
+    keyword = bestMatchedKeyword;
+  }
   chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
     var currentTabId = tabs[0].id;
     console.log("Current tab ID is: " + currentTabId);
-    openTargetSite(sites, keyword.trim(), currentTabId);
+    openTargetSite(sites, keyword, currentTabId);
   });
 });
 
