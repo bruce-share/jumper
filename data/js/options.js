@@ -1,7 +1,35 @@
+function getOptionFromStorage(reuseTabSwitch) {
+  chrome.storage.sync.get('option', (result) => {
+        if (chrome.runtime.lastError) {
+          console.error(chrome.runtime.lastError);
+        } else {
+          if (result.option === undefined) {
+              console.error("Not found option in storage");
+          } else {
+            option = result.option;
+            reuseTabSwitch.checked = option.reuseTab;
+          }
+        }
+      });
+}
+
+function saveOptionToStorage(option) {
+  chrome.storage.sync.set({ option: option });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
  let data = [];
  let unsavedChanges = false;
+ let option = {};
  const saveButton = document.getElementById("save-button");
+   const reuseTabSwitch = document.getElementById('reuseTabSwitch');
+   getOptionFromStorage(reuseTabSwitch);
+   reuseTabSwitch.addEventListener('change', function() {
+       var isEnabled = reuseTabSwitch.checked;
+       option.reuseTab = isEnabled;
+       saveOptionToStorage(option);
+       chrome.runtime.sendMessage({ action: "update_option"}, (response) => {});
+     });
 
    chrome.runtime.sendMessage({ action: "get_sitemap"}, (response) => {
        deserializeData(response.message)

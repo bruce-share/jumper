@@ -1,10 +1,11 @@
-import {saveSiteMapToStorage, loadSiteMapFromStorage, loadSiteMapFromFile} from './storage-helper.js';
+import {saveSiteMapToStorage, loadSiteMapFromStorage, loadSiteMapFromFile, getOptionFromStorage} from './storage-helper.js';
 
 let sites = [];
 let optionUrl = "chrome-extension://"+chrome.runtime.id+"/data/options.html";
 let tutorialUrl = "chrome-extension://"+chrome.runtime.id+"/hello.html";
 let keywords = [];
 let currentFilterPromise;
+let options = {};
 
 function xmlEncode(str) {
   return str.replace(/'/g, '&apos;')
@@ -77,6 +78,9 @@ chrome.runtime.onMessage.addListener(async function(message, sender, sendRespons
   } else if (message.action === "get_sitemap") {
     sendResponse({ message: "Received"});
     sendSiteMapBackToCaller();
+  } else if (message.action === "update_option") {
+    sendResponse({ message: "Received"});
+    options = await getOptionFromStorage();
   }
 });
 
@@ -88,13 +92,13 @@ async function sendSiteMapBackToCaller() {
 }
 
 async function buildSiteMapFromStorage() {
+   options = await getOptionFromStorage(); //Load options
    let sitemapText = await loadSiteMapFromStorage();
    if (sitemapText == undefined || sitemapText.length == 0) {
        sitemapText = await loadSiteMapFromFile();
        console.log("Sitemap load from file: " + sitemapText.length);
        //Add option shortcut for this extension
-       let option = "option "+optionUrl;
-       sitemapText += "\n" + option;
+       sitemapText += "\n" + "option "+optionUrl;
        //Add tutorial shortcut for this extension
        let help = "help "+tutorialUrl;
        sitemapText += "\n" + help;
@@ -139,6 +143,25 @@ function buildSiteMap(text) {
     return _sites;
 }
 
+function searchOpenedChromeTab(url) {
+    return new Promise(async (resolve) => {
+        let found = false;
+        chrome.windows.getAll({ populate: true }, function (windows) {
+          windows.forEach(function (window) {
+            window.tabs.forEach(function (tab) {
+              if (tab.url == url) {
+                  found = true;
+                  resolve({windowId: window.id, tabId: tab.id});
+                  return;
+              }
+            });
+            if (found) return;
+          });
+          if (!found) resolve(null)
+        });
+    });
+}
+
 async function openTargetSite(sites, keyword, tabId) {
     if (sites == undefined || sites.length == 0) {
         console.error("Sites is undefined! - "+sites);
@@ -153,7 +176,20 @@ async function openTargetSite(sites, keyword, tabId) {
             if (sites[i][j].toLowerCase() == keyword.toLowerCase()) {
                 var url=sites[i][sites[i].length-1];
                 console.log(url);
-                chrome.tabs.update(tabId, {url: url});
+
+                if (options.reuseTab == true) {
+                    let openedTab = await searchOpenedChromeTab(url);
+                    if (openedTab != null) {
+                        console.log("Found opened tab for the keyword")
+                        chrome.windows.update(openedTab.windowId, {focused: true}, (window) => {
+                            chrome.tabs.update(openedTab.tabId, {active: true})
+                        })
+                    } else {
+                        chrome.tabs.update(tabId, {url: url});
+                    }
+                } else {
+                    chrome.tabs.update(tabId, {url: url});
+                }
                 return
             }
         }

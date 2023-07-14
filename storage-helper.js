@@ -28,6 +28,22 @@ export function loadSiteMapFromFile(saveFunction) {
     });
 }
 
+export function getOptionFromStorage() {
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get('option', (result) => {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+      } else {
+        if (result.option === undefined) {
+            result.option = {}
+        } else {
+            console.log("Found option in the storage - " + JSON.stringify(result.option));
+        }
+        resolve(result.option);
+      }
+    });
+  });
+}
 
 function loadSmallSiteMapFromStorage() {
   return new Promise((resolve, reject) => {
