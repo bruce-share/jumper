@@ -4,8 +4,7 @@
   "description": "No more bookmark. Quickly jump to any website by a keyword of your choice",
   "permissions": [
     "tabs",
-    "storage",
-    "search"
+    "storage"
   ],
   "omnibox": { "keyword": "j" },
   "background": {
