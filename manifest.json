@@ -1,6 +1,6 @@
 {
   "name": "Jumper",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "No more bookmark. Quickly jump to any website by a keyword of your choice",
   "permissions": [
     "activeTab",
