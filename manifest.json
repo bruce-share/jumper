@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "description": "No more bookmark. Quickly jump to any website by a keyword of your choice",
   "permissions": [
-    "tabs",
+    "activeTab",
     "storage"
   ],
   "omnibox": { "keyword": "j" },

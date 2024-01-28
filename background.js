@@ -62,11 +62,7 @@ chrome.omnibox.onInputEntered.addListener(async (keyword) => {
   if (bestMatchedKeyword.indexOf(keyword) >= 0) {
     keyword = bestMatchedKeyword;
   }
-  chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
-    var currentTabId = tabs[0].id;
-    console.log("Current tab ID is: " + currentTabId);
-    openTargetSite(sites, keyword, currentTabId);
-  });
+   openTargetSite(sites, keyword);
 });
 
 chrome.runtime.onMessage.addListener(async function(message, sender, sendResponse) {
@@ -170,7 +166,7 @@ function searchOpenedChromeTab(url) {
     });
 }
 
-async function openTargetSite(sites, keyword, tabId) {
+async function openTargetSite(sites, keyword) {
     if (sites == undefined || sites.length == 0) {
         console.error("Sites is undefined! - "+sites);
         await buildSiteMapFromStorage();
@@ -184,23 +180,10 @@ async function openTargetSite(sites, keyword, tabId) {
             if (sites[i][j].toLowerCase() == keyword.toLowerCase()) {
                 var url=sites[i][sites[i].length-1];
                 console.log(url);
-
-                if (options.reuseTab == true) {
-                    let openedTab = await searchOpenedChromeTab(url);
-                    if (openedTab != null) {
-                        console.log("Found opened tab for the keyword")
-                        chrome.windows.update(openedTab.windowId, {focused: true}, (window) => {
-                            chrome.tabs.update(openedTab.tabId, {active: true})
-                        })
-                    } else {
-                        chrome.tabs.update(tabId, {url: url});
-                    }
-                } else {
-                    chrome.tabs.update(tabId, {url: url});
-                }
+                chrome.tabs.update(undefined, {url: url});
                 return
             }
         }
     }
-    chrome.tabs.update(tabId, {url: "https://www.google.com/search?q="+keyword});
+    chrome.tabs.update(undefined, {url: "https://www.google.com/search?q="+keyword});
 }
