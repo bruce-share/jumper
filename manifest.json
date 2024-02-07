@@ -1,7 +1,7 @@
 {
-  "name": "Jumper",
-  "version": "1.0.2",
-  "description": "No more bookmark. Quickly jump to any website by a keyword of your choice",
+  "name": "JumpX",
+  "version": "1.0.3",
+  "description": "Instantly open favourite websites by memorable keywords of your choice. No need to dive in the huge bookmark",
   "permissions": [
     "activeTab",
     "storage"
